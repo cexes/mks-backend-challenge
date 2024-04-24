@@ -1,19 +1,23 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConsoleLogger, Module } from '@nestjs/common';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User } from './entities/user.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      username: 'spider_man',
-      password: 'iron_man',
-      database: 'challengeapi',
-      synchronize: true,
-      entities: [User],
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: process.env.TYPEORM_DB || 'postgres',
+        host: process.env.TYPEORM_HOST,
+        username: process.env.TYPEORM_USERNAME,
+        password: process.env.TYPEORM_PASSWORD,
+        database: process.env.TYPEORM_DATABASE,
+        synchronize: true,
+        entities: [User],
+      } as TypeOrmModuleOptions),
     }),
     TypeOrmModule.forFeature([User]),
   ],
