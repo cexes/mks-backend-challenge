@@ -25,7 +25,7 @@ export class UsersService {
     const user = new User();
     user.name = createUserDto.name;
     user.email = createUserDto.email;
-    user.passoword = createUserDto.password; 
+    user.password = createUserDto.password; 
 
     return await this.userRepository.save(user);
   }
@@ -72,7 +72,7 @@ export class UsersService {
     }
 
     if (updateUserDto.password) {
-       user.passoword = updateUserDto.password;
+       user.password = updateUserDto.password;
     }
 
      return await this.userRepository.save(user);

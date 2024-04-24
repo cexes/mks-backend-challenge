@@ -16,10 +16,10 @@ export class User {
       email:string;
     
     @Column()
-      passoword: string;
+      password: string;
      
     @BeforeInsert()  
     generateHashPassword() {
-       this.passoword = hashSync(this.passoword, 10)
+       this.password = hashSync(this.password, 10)
     }
 }
