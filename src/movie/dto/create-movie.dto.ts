@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsString, IsDate, IsArray, ArrayNotEmpty, Length } from 'class-validator';
+import { IsNotEmpty, IsString, IsDate, IsArray } from 'class-validator';
 
-export class CreateMoviesDto {
+export class CreateMovieDto {
 
     @IsNotEmpty()
     @IsString()
@@ -20,12 +20,10 @@ export class CreateMoviesDto {
 
     @IsNotEmpty()
     @IsArray()
-    @ArrayNotEmpty()
     cast: string;
 
     @IsNotEmpty()
     @IsString()
-    @Length(1, 200)
     synopsis: string;
 
     @IsNotEmpty()

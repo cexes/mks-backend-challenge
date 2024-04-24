@@ -1,6 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('movies-catalog')
+@Entity('movies')
 export class Movie {
 
     @PrimaryGeneratedColumn()
@@ -8,7 +8,7 @@ export class Movie {
 
     @Column({ length: 100 })
     title: string;
-     
+
     @Column({ length: 100 })
     rating: string;
 
@@ -18,8 +18,8 @@ export class Movie {
     @Column({ length: 100 })
     director: string;
 
-    @Column({ length: 100 })
-    cast: string; // Mantido como uma string simples
+    @Column({ length: 100})
+    cast: string;
 
     @Column({ length: 200 })
     synopsis: string;

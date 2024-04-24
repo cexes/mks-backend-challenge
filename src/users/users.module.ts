@@ -1,28 +1,15 @@
-import { ConsoleLogger, Module } from '@nestjs/common';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { UsersService } from './users.service';
+import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
+import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
-import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm'; // Importe o TypeOrmModule
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRootAsync({
-      useFactory: () => ({
-        type: process.env.TYPEORM_DB || 'postgres',
-        host: process.env.TYPEORM_HOST,
-        username: process.env.TYPEORM_USERNAME,
-        password: process.env.TYPEORM_PASSWORD,
-        database: process.env.TYPEORM_DATABASE,
-        synchronize: true,
-        entities: [User],
-      } as TypeOrmModuleOptions),
-    }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User]), // Importe apenas o TypeOrmModule.forFeature
   ],
   controllers: [UsersController],
   providers: [UsersService],
-  exports: [UsersService],
+  exports: [UsersService], // Se necessário
 })
 export class UsersModule {}
