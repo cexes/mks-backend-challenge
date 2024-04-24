@@ -16,9 +16,6 @@ export class MovieService {
       
     ) {}
 
-
-       // CACHE LOGIC
-
    async CacheMovies () {
       console.log('Insider Service')
       const cacheData  =  await this.cacheManager.get('movies');
@@ -111,7 +108,5 @@ export class MovieService {
      return movieToRemove;
 
    } 
-
-
  
 }
