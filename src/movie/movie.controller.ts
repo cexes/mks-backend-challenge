@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('movies')
 export class MovieController {
    constructor(private readonly movieService: MovieService) {}
@@ -29,7 +31,7 @@ export class MovieController {
 
   @Delete(':id')
     remove(@Param('id') id:string) {
-      return this.movieService.remove(+id);
+      return this.movieService.remove(+id)
     }  
 
 }

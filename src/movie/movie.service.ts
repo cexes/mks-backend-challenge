@@ -77,13 +77,13 @@ export class MovieService {
        return await this.movieRepository.save(movie);
     }
 
-   async remove(id: number): Promise<Movie> {
+   async remove(id: number):Promise<Movie> {
      const movieToRemove =  await this.movieRepository.findOne({ where :{id: +id } });
      
      if(!movieToRemove) {
         throw new NotFoundException('Movie not foud');
      }
-
+     
      await this.movieRepository.remove(movieToRemove);
      return movieToRemove;
 

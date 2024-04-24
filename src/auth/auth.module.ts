@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { LocalStrategy } from './stratategies/local.strategy';
 import { JwtStrategy } from './stratategies/jwt.strategy';
+import { MovieModule } from 'src/movie/movie.module';
 
 @Module({
   imports:[
@@ -15,7 +16,7 @@ import { JwtStrategy } from './stratategies/jwt.strategy';
     UsersModule,
     JwtModule.register({
       privateKey: process.env.JWT_SECRET_KEY,
-      signOptions: {expiresIn:'60s'},
+      signOptions: {expiresIn:'120s'},
     })
 
   ],
