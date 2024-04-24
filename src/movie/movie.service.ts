@@ -1,17 +1,37 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Movie } from './entities/movie.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class MovieService {
     constructor(
+
+      @Inject('CACHE_MANAGER') private cacheManager: Cache,
       @InjectRepository(Movie)
       private readonly movieRepository: Repository<Movie>,   
+      
     ) {}
 
+
+       // CACHE LOGIC
+
+   async CacheMovies () {
+      console.log('Insider Service')
+      const cacheData  =  await this.cacheManager.get('movies');
+      if(cacheData) {
+         console.log('got data from cache')
+         return cacheData;
+      }
+      
+      const moviesData = await this.findAll();
+      await this.cacheManager.set('movies', moviesData);
+      return moviesData;  
+   
+   }
     
     async create(createmovieDto: CreateMovieDto): Promise<Movie> {
         
@@ -31,7 +51,10 @@ export class MovieService {
     }
 
     async findAll(): Promise<Movie[]> {
+      
+      
        return await this.movieRepository.find();
+       
     }
 
     async findOne(id:number):Promise<Movie> {
@@ -90,4 +113,5 @@ export class MovieService {
    } 
 
 
+ 
 }

@@ -6,11 +6,20 @@ import { User } from './users/entities/user.entity';
 import { Movie } from './movie/entities/movie.entity';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { CacheModule } from '@nestjs/cache-manager';
+
 
 @Module({
   imports: [
+    CacheModule.register(
+      {
+        isGlobal:true,
+        ttl: 60 * 1000,
+      },
+    ),
     ConfigModule.forRoot({
       isGlobal: true,
+    
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
@@ -23,9 +32,11 @@ import { AuthModule } from './auth/auth.module';
         entities: [User, Movie],
       } as TypeOrmModuleOptions),
     }),
+    
     UsersModule,
     MovieModule,
     AuthModule,
+
   ],
 })
 export class AppModule {}
