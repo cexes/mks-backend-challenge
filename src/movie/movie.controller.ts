@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @UseGuards(AuthGuard('jwt'))
+@UseInterceptors(CacheInterceptor)
 @Controller('movies')
 export class MovieController {
    constructor(private readonly movieService: MovieService) {}
@@ -16,7 +18,8 @@ export class MovieController {
    
    @Get()
     findAll() {
-       return this.movieService.findAll();
+       console.log('Inside controller')
+       return this.movieService.CacheMovies();
     }
 
    @Get(':id')
