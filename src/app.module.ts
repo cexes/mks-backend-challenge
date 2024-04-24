@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true
     }),
     UsersModule,
+  
 
   ],
   controllers: [AppController],
