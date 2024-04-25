@@ -4,7 +4,9 @@ import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { CacheInterceptor } from '@nestjs/cache-manager';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('movies')
 @UseGuards(AuthGuard('jwt'))
 @UseInterceptors(CacheInterceptor)
 @Controller('movies')
